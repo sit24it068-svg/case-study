@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register | CampusConnect</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      .register-page {
+        width: min(1100px, 90%);
+        margin: 55px auto 80px;
+      }
+
+      .register-heading {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      .register-heading h1 {
+        font-size: clamp(32px, 5vw, 48px);
+        margin: 15px 0 8px;
+        letter-spacing: -1.5px;
+      }
+
+      .register-heading p {
+        color: #a4a5c1;
+        font-size: 14px;
+      }
+
+      .register-layout {
+        display: grid;
+        grid-template-columns: 0.75fr 1.4fr;
+        gap: 25px;
+        align-items: start;
+      }
+
+      .register-info,
+      .register-form {
+        background: rgba(20, 22, 43, 0.85);
+        border: 1px solid rgba(167, 139, 250, 0.2);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 60px #0003;
+        backdrop-filter: blur(15px);
+      }
+
+      .register-info {
+        position: sticky;
+        top: 20px;
+        overflow: hidden;
+      }
+
+      .register-info h2 {
+        font-size: 25px;
+        line-height: 1.35;
+        margin: 18px 0 12px;
+      }
+
+      .register-info > p {
+        color: #a4a5c1;
+        font-size: 13px;
+        line-height: 1.9;
+      }
+
+      .info-art {
+        display: grid;
+        place-items: center;
+        height: 180px;
+        margin: 10px 0 20px;
+        border-radius: 16px;
+        background: radial-gradient(
+          circle,
+          #8b5cf64d,
+          #67e8f90c 60%,
+          transparent 75%
+        );
+      }
+
+      .info-cube {
+        width: 100px;
+        height: 100px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #c4b5fd;
+        border-radius: 24px;
+        background: linear-gradient(135deg, #a78bfa55, #67e8f922);
+        box-shadow:
+          0 0 50px #8b5cf644,
+          inset 0 0 30px #a78bfa22;
+        font-size: 47px;
+        transform: rotate(-12deg);
+        animation: register-float 4s ease-in-out infinite;
+      }
+
+      .info-point {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 20px;
+        font-size: 12px;
+        color: #e5e4f8;
+      }
+
+      .info-point span {
+        display: grid;
+        place-items: center;
+        width: 35px;
+        height: 35px;
+        flex-shrink: 0;
+        border: 1px solid #a78bfa33;
+        border-radius: 10px;
+        color: #a78bfa;
+        background: #a78bfa12;
+      }
+
+      .form-title {
+        font-size: 21px;
+        margin-bottom: 5px;
+      }
+
+      .form-subtitle {
+        color: #9293af;
+        font-size: 12px;
+        margin-bottom: 25px;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 19px;
+      }
+
+      .form-field {
+        min-width: 0;
+      }
+
+      .form-field.full {
+        grid-column: 1 / -1;
+      }
+
+      .form-field label {
+        display: block;
+        margin-bottom: 8px;
+        color: #dcdcf1;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      .form-field input,
+      .form-field select {
+        width: 100%;
+        min-height: 47px;
+        padding: 12px;
+        border: 1px solid #ffffff1b;
+        border-radius: 10px;
+        outline: none;
+        background: #0d0e1d;
+        color: #f6f5ff;
+        font: inherit;
+        font-size: 12px;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .form-field input:focus,
+      .form-field select:focus {
+        border-color: #a78bfa;
+        box-shadow: 0 0 0 3px #a78bfa18;
+      }
+
+      .form-field input::placeholder {
+        color: #686982;
+      }
+
+      .form-field select option {
+        background: #121326;
+        color: white;
+      }
+
+      .upload-box {
+        padding: 20px;
+        text-align: center;
+        border: 1px dashed #a78bfa66;
+        border-radius: 13px;
+        background: #a78bfa09;
+      }
+
+      .upload-box .upload-icon {
+        font-size: 27px;
+        color: #a78bfa;
+      }
+
+      .upload-box p {
+        margin: 5px 0 12px;
+        color: #a4a5c1;
+        font-size: 11px;
+      }
+
+      .upload-box input {
+        min-height: auto;
+        border: none;
+        background: transparent;
+        padding: 5px;
+      }
+
+      .form-note {
+        margin: 18px 0;
+        color: #9293af;
+        font-size: 10px;
+        line-height: 1.8;
+      }
+
+      .submit-btn {
+        width: 100%;
+        min-height: 49px;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #0b0a19;
+        background: linear-gradient(110deg, #b5a1ff, #78e9f7);
+        font-size: 13px;
+        font-weight: 800;
+        box-shadow: 0 8px 25px #8e83ff24;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px #8e83ff40;
+      }
+
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: wait;
+      }
+
+      .form-message {
+        display: none;
+        padding: 12px;
+        margin-bottom: 17px;
+        border-radius: 9px;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+      }
+
+      .form-message.error {
+        display: block;
+        border: 1px solid #fb718555;
+        background: #fb718512;
+        color: #fda4af;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-bottom: 25px;
+        color: #b9b0ff;
+        font-size: 12px;
+      }
+
+      @keyframes register-float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(-12deg);
+        }
+        50% {
+          transform: translateY(-10px) rotate(-5deg);
+        }
+      }
+
+      @media (max-width: 760px) {
+        .register-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .register-info {
+          position: static;
+        }
+
+        .info-art {
+          height: 125px;
+        }
+
+        .info-cube {
+          width: 75px;
+          height: 75px;
+          font-size: 35px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .register-form,
+        .register-info {
+          padding: 20px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .form-field.full {
+          grid-column: auto;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="grid-bg"></div>
+
+    <header class="navbar">
+      <a href="/" class="logo">
+        <span class="logo-icon">✳</span>
+        Campus<span>Connect</span>
+      </a>
+
+      <nav>
+        <a href="/">Home</a>
+        <a href="/#events">Explore Events</a>
+        <a class="active" href="/register">Register</a>
+        <a href="/admin.html">Admin</a>
+      </nav>
+
+      <a href="/" class="nav-btn">← Home</a>
+    </header>
+
+    <main class="register-page">
+      <a href="/" class="back-link">← Back to homepage</a>
+
+      <div class="register-heading">
+        <div class="eyebrow" style="justify-content: center">
+          <span class="live-dot"></span>
+          YOUR NEXT EXPERIENCE STARTS HERE
+        </div>
+
+        <h1>Let's Make It <span class="gradient-text">Happen.</span></h1>
+        <p>Fill in your details and reserve your place at a campus event.</p>
+      </div>
+
+      <div class="register-layout">
+        <aside class="register-info">
+          <div class="eyebrow">
+            <span class="live-dot"></span>
+            CAMPUSCONNECT
+          </div>
+
+          <h2>
+            Your passion.<br />Your people.<br /><span class="gradient-text"
+              >Your moment.</span
+            >
+          </h2>
+
+          <p>
+            Step out of the ordinary. Discover opportunities, explore your
+            interests and create unforgettable college memories.
+          </p>
+
+          <div class="info-art">
+            <div class="info-cube">✳</div>
+          </div>
+
+          <div class="info-point">
+            <span>✦</span>
+            <div>Discover exciting campus activities</div>
+          </div>
+
+          <div class="info-point">
+            <span>◈</span>
+            <div>Showcase your skills and creativity</div>
+          </div>
+
+          <div class="info-point">
+            <span>✓</span>
+            <div>Register online in a few simple steps</div>
+          </div>
+        </aside>
+
+        <section class="register-form">
+          <h2 class="form-title">Student Registration</h2>
+          <p class="form-subtitle">Enter your details accurately.</p>
+
+          <div id="formMessage" class="form-message" role="alert"></div>
+
+          <form
+            id="registrationForm"
+            action="/register"
+            method="POST"
+            enctype="multipart/form-data"
+          >
+            <div class="form-grid">
+              <div class="form-field full">
+                <label for="studentName">Full Name *</label>
+                <input
+                  id="studentName"
+                  name="studentName"
+                  type="text"
+                  placeholder="Enter your full name"
+                  maxlength="100"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="registerNo">Register Number *</label>
+                <input
+                  id="registerNo"
+                  name="registerNo"
+                  type="text"
+                  placeholder="e.g. SIT24IT068"
+                  maxlength="30"
+                  required
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="email">College Email *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  maxlength="150"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="department">Department *</label>
+                <select id="department" name="department" required>
+                  <option value="">Select department</option>
+                  <option value="IT">Information Technology</option>
+                  <option value="CSE">Computer Science Engineering</option>
+                  <option value="ECE">Electronics and Communication</option>
+                  <option value="EEE">Electrical and Electronics</option>
+                  <option value="MECH">Mechanical Engineering</option>
+                  <option value="CIVIL">Civil Engineering</option>
+                  <option value="AIDS">AI and Data Science</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label for="year">Year of Study *</label>
+                <select id="year" name="year" required>
+                  <option value="">Select year</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                </select>
+              </div>
+
+              <div class="form-field full">
+                <label for="eventName">Choose Your Event *</label>
+                <select id="eventName" name="eventName" required>
+                  <option value="">Loading events...</option>
+                </select>
+              </div>
+
+              <input type="hidden" id="eventType" name="eventType" />
+
+              <div class="form-field full">
+                <label for="idCard">Upload Student ID Card *</label>
+                <div class="upload-box">
+                  <div class="upload-icon">⇧</div>
+                  <p>Upload a clear JPG, PNG or PDF file. Maximum 2 MB.</p>
+                  <input
+                    id="idCard"
+                    name="idCard"
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <p class="form-note">
+              By submitting this form, you confirm that the details provided are
+              accurate and that the uploaded ID card belongs to you.
+            </p>
+
+            <button class="submit-btn" id="submitBtn" type="submit">
+              Submit Registration &nbsp; ↗
+            </button>
+          </form>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <a href="/" class="logo"
+        ><span class="logo-icon">✳</span> Campus<span>Connect</span></a
+      >
+      <p>Designed for campus life. Built for your next experience.</p>
+      <span>© 2026 CampusConnect</span>
+    </footer>
+
+    <script>
+      const eventSelect = document.getElementById("eventName");
+      const eventTypeInput = document.getElementById("eventType");
+      const form = document.getElementById("registrationForm");
+      const message = document.getElementById("formMessage");
+      const submitBtn = document.getElementById("submitBtn");
+      const idCard = document.getElementById("idCard");
+
+      function showError(text) {
+        message.textContent = text;
+        message.className = "form-message error";
+      }
+
+      async function loadRegistrationEvents() {
+        try {
+          const response = await fetch("/api/events");
+          if (!response.ok) throw new Error("Unable to retrieve events.");
+
+          const events = await response.json();
+          eventSelect.replaceChildren();
+
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.textContent = "Select an event";
+          eventSelect.appendChild(placeholder);
+
+          events.forEach((event) => {
+            const option = document.createElement("option");
+            option.value = event.eventName;
+            option.textContent = `${event.eventName} — ${event.eventType} (${Math.max(0, event.maxParticipants - event.registered)} spots left)`;
+            option.dataset.type = event.eventType;
+            option.disabled = event.registered >= event.maxParticipants;
+            eventSelect.appendChild(option);
+          });
+
+          if (events.length === 0) {
+            placeholder.textContent = "No events available";
+          }
+        } catch (error) {
+          eventSelect.replaceChildren();
+          const option = document.createElement("option");
+          option.value = "";
+          option.textContent = "Unable to load events";
+          eventSelect.appendChild(option);
+          showError(
+            "Couldn't load events. Check your server and refresh this page.",
+          );
+        }
+      }
+
+      eventSelect.addEventListener("change", () => {
+        const selected = eventSelect.selectedOptions[0];
+        eventTypeInput.value = selected?.dataset.type || "";
+        message.className = "form-message";
+      });
+
+      idCard.addEventListener("change", () => {
+        const file = idCard.files[0];
+        if (!file) return;
+
+        const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+
+        if (!allowedTypes.includes(file.type)) {
+          idCard.value = "";
+          showError("Please select a JPG, PNG or PDF file.");
+        } else if (file.size > 2 * 1024 * 1024) {
+          idCard.value = "";
+          showError("The ID card file must be smaller than 2 MB.");
+        } else {
+          message.className = "form-message";
+        }
+      });
+
+      form.addEventListener("submit", (event) => {
+        const selected = eventSelect.selectedOptions[0];
+
+        if (!eventSelect.value || !selected || selected.disabled) {
+          event.preventDefault();
+          showError("Please select an available event.");
+          return;
+        }
+
+        if (!idCard.files.length) {
+          event.preventDefault();
+          showError("Please upload your student ID card.");
+          return;
+        }
+
+        eventTypeInput.value = selected.dataset.type || "";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting registration...";
+      });
+
+      loadRegistrationEvents();
+    </script>
+  </body>
+</html>

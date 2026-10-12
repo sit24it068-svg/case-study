@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CampusConnect | Discover Your Next Experience</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="grid-bg"></div>
+
+    <header class="navbar">
+      <a href="/" class="logo">
+        <span class="logo-icon">✳</span>
+        Campus<span>Connect</span>
+      </a>
+
+      <nav>
+        <a class="active" href="/">Home</a>
+        <a href="#events">Explore Events</a>
+        <a href="/register">Register</a>
+        <a href="/admin.html">Admin</a>
+      </nav>
+
+      <a href="/register" class="nav-btn">Join an Event <span>↗</span></a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="live-dot"></span>
+            YOUR CAMPUS. YOUR MOMENT.
+          </div>
+
+          <h1>
+            Discover.<br />
+            Participate.<br />
+            <span class="gradient-text">Make Memories.</span>
+          </h1>
+
+          <p class="hero-description">
+            Your next big experience starts here. Discover campus events,
+            showcase your talent, meet your people and make every moment count.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#events" class="primary-btn">
+              Explore Events <span>↗</span>
+            </a>
+            <a href="/register" class="secondary-btn">
+              Register Now <span>→</span>
+            </a>
+          </div>
+
+          <div class="hero-stats">
+            <div>
+              <strong id="eventCount">03</strong>
+              <span>Exciting Events</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div>
+              <strong>01</strong>
+              <span>Campus Community</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div>
+              <strong>∞</strong>
+              <span>Possibilities</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+
+          <div class="floating-label label-top">
+            <span class="label-symbol">✦</span>
+            <div>
+              <strong>Think Creative</strong>
+              <small>Unlock your potential</small>
+            </div>
+          </div>
+
+          <div class="crystal-scene">
+            <div class="crystal crystal-back"></div>
+            <div class="crystal crystal-main">
+              <div class="crystal-inner">
+                <span>✳</span>
+                <small>CAMPUS<br />CONNECT</small>
+              </div>
+            </div>
+            <div class="crystal crystal-front"></div>
+            <div class="crystal-base"></div>
+          </div>
+
+          <div class="floating-label label-bottom">
+            <div class="mini-avatars">
+              <span>S</span><span>C</span><span>+</span>
+            </div>
+            <div>
+              <strong>Find Your People</strong>
+              <small>Make it memorable</small>
+            </div>
+          </div>
+
+          <div class="spark spark-one">✦</div>
+          <div class="spark spark-two">✧</div>
+          <div class="spark spark-three">✦</div>
+        </div>
+      </section>
+
+      <section class="events-section" id="events">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">
+              <span class="live-dot"></span> WHAT'S HAPPENING
+            </div>
+            <h2>Explore Upcoming <span class="gradient-text">Events.</span></h2>
+            <p>Find your passion. Join the experience. Create your story.</p>
+          </div>
+          <a href="/register" class="view-all"
+            >Register for an event <span>↗</span></a
+          >
+        </div>
+
+        <div class="event-grid" id="eventGrid">
+          <div class="loading-card">Loading your campus experiences...</div>
+        </div>
+      </section>
+
+      <section class="bottom-banner">
+        <div class="banner-orb"></div>
+        <div>
+          <div class="eyebrow">YOUR NEXT CHAPTER STARTS HERE</div>
+          <h2>
+            Don't just attend college.<br /><span class="gradient-text"
+              >Experience it.</span
+            >
+          </h2>
+          <p>One registration could lead to your favourite memory.</p>
+        </div>
+        <a href="/register" class="primary-btn">Get Started <span>↗</span></a>
+      </section>
+    </main>
+
+    <footer>
+      <a href="/" class="logo"
+        ><span class="logo-icon">✳</span> Campus<span>Connect</span></a
+      >
+      <p>Designed for campus life. Built for your next experience.</p>
+      <span>© 2026 CampusConnect</span>
+    </footer>
+
+    <script>
+      async function loadEvents() {
+        const grid = document.getElementById("eventGrid");
+
+        try {
+          const response = await fetch("/api/events");
+          if (!response.ok) throw new Error("Events could not be loaded");
+
+          const events = await response.json();
+          document.getElementById("eventCount").textContent = String(
+            events.length,
+          ).padStart(2, "0");
+
+          const eventStyles = [
+            { icon: "⌘", color: "violet", caption: "DESIGN • BUILD • CREATE" },
+            { icon: "◈", color: "cyan", caption: "THINK • SOLVE • WIN" },
+            { icon: "✳", color: "pink", caption: "MOVE • EXPRESS • SHINE" },
+          ];
+
+          grid.innerHTML = events
+            .map((event, index) => {
+              const style = eventStyles[index % eventStyles.length];
+              const remaining = Math.max(
+                0,
+                event.maxParticipants - event.registered,
+              );
+
+              return `
+                        <article class="event-card ${style.color}"
+                            style="--card-index:${index}">
+                            <div class="card-top">
+                                <span class="category-pill">${event.eventType}</span>
+                                <span class="card-number">0${index + 1}</span>
+                            </div>
+
+                            <div class="event-art">
+                                <div class="art-ring"></div>
+                                <div class="art-orb">${style.icon}</div>
+                                <div class="art-shadow"></div>
+                                <span class="art-spark">✦</span>
+                            </div>
+
+                            <p class="card-caption">${style.caption}</p>
+                            <h3>${event.eventName}</h3>
+
+                            <div class="event-details">
+                                <span>◷ ${event.eventDate}</span>
+                                <span>⌖ ${event.venue}</span>
+                            </div>
+
+                            <div class="availability">
+                                <span>${remaining} spots left</span>
+                                <span>${event.registered}/${event.maxParticipants}</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill"
+                                    style="width:${Math.min(100, (event.registered / event.maxParticipants) * 100)}%">
+                                </div>
+                            </div>
+
+                            <a class="card-link ${remaining === 0 ? "disabled" : ""}"
+                                href="${remaining === 0 ? "#" : "/register"}">
+                                ${remaining === 0 ? "Event Full" : "Register for Event"}
+                                <span>↗</span>
+                            </a>
+                        </article>
+                    `;
+            })
+            .join("");
+
+          if (events.length === 0) {
+            grid.innerHTML = "<p>No events available right now.</p>";
+          }
+        } catch (error) {
+          grid.innerHTML = `
+                    <div class="loading-card">
+                        Unable to load events. Please check that the server is running.
+                    </div>`;
+        }
+      }
+
+      // Subtle 3D tilt when moving the pointer over an event card
+      document.addEventListener("pointermove", (event) => {
+        const card = event.target.closest(".event-card");
+        if (!card) return;
+
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+
+        card.style.setProperty("--rotate-x", `${(0.5 - y) * 7}deg`);
+        card.style.setProperty("--rotate-y", `${(x - 0.5) * 7}deg`);
+      });
+
+      document.addEventListener("pointerout", (event) => {
+        const card = event.target.closest(".event-card");
+        if (card && !card.contains(event.relatedTarget)) {
+          card.style.setProperty("--rotate-x", "0deg");
+          card.style.setProperty("--rotate-y", "0deg");
+        }
+      });
+
+      loadEvents();
+    </script>
+  </body>
+</html>
